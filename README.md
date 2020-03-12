@@ -1,4 +1,4 @@
-# flutter_complete_course
+# Flutter Complete Course
 
 A new Flutter project.
 
