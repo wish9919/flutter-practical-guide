@@ -11,20 +11,27 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var _yourName = '';
+  var _questionIndex = 0;
 
-  var wish = 'Wishvantha';
-  var osha = 'Oshini';
-  var venu = 'Venuka';
-
-  _answerQuestion({yourName}) {
+  void _answerQuestion() {
     setState(() {
-      _yourName = yourName;
+      _questionIndex = _questionIndex + 1;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    var questions = [
+      {
+        'questionText': 'What\'s your favorite color?',
+        'answers': ['Black', 'Red', 'Green', 'Blue']
+      },
+      {
+        'questionText': 'What\'s your favorite animal?',
+        'answers': ['Snake', 'Tiger', 'Eagle', 'Lion']
+      },
+    ];
+
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Poppins'),
       debugShowCheckedModeBanner: false,
@@ -35,17 +42,11 @@ class _MyAppState extends State<MyApp> {
         )),
         body: Column(
           children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(10.0),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text('What is your name?'),
-              ),
-            ),
-            Question(_yourName),
-            Answer('Wishvantha Perera', () => _answerQuestion(yourName: wish)),
-            Answer('Oshini Dissanayake', () => _answerQuestion(yourName: osha)),
-            Answer('Venuka Wijethunga', () => _answerQuestion(yourName: venu))
+            Question(questions[_questionIndex]['questionText']),
+            ...(questions[_questionIndex]['answers'] as List<String>)
+                .map((answer) {
+              return Answer(_answerQuestion, answer);
+            }).toList()
           ],
         ),
       ),
