@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_course/answer.dart';
+
+import './question.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,18 +11,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var questionIndex = 0;
+  var _yourName = '';
 
-  void answerQuestion() {
+  var wish = 'Wishvantha';
+  var osha = 'Oshini';
+  var venu = 'Venuka';
+
+  _answerQuestion({yourName}) {
     setState(() {
-      questionIndex = questionIndex + 1;
+      _yourName = yourName;
     });
-    print(questionIndex);
   }
 
   @override
   Widget build(BuildContext context) {
-    var questions = ['Wishvantha Perera', 'Venuka Wijethunga'];
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Poppins'),
       debugShowCheckedModeBanner: false,
@@ -30,21 +35,17 @@ class _MyAppState extends State<MyApp> {
         )),
         body: Column(
           children: <Widget>[
-            Text(questions[questionIndex]),
-            RaisedButton(
-              child: Text('Answer 1'),
-              onPressed: answerQuestion,
+            Container(
+              padding: EdgeInsets.all(10.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text('What is your name?'),
+              ),
             ),
-            RaisedButton(
-              child: Text('Answer 2'),
-              onPressed: () => print('Answer 2'),
-            ),
-            RaisedButton(
-              child: Text('Answer 3'),
-              onPressed: () {
-                print('Answer 3');
-              },
-            )
+            Question(_yourName),
+            Answer('Wishvantha Perera', () => _answerQuestion(yourName: wish)),
+            Answer('Oshini Dissanayake', () => _answerQuestion(yourName: osha)),
+            Answer('Venuka Wijethunga', () => _answerQuestion(yourName: venu))
           ],
         ),
       ),
